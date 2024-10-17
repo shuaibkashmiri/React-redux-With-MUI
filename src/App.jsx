@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { dataSucess } from './redux/action'
+import { userData } from './redux/action'
 
 
 const App = () => {
@@ -9,14 +9,16 @@ const App = () => {
 const dispatch=useDispatch();
 
 function handleClick(){
-  dispatch(dataSucess())
+  dispatch(userData())
 }
 
-const name = useSelector(state => state.getData.name)
+const users = useSelector(state => state.getData.users)
+
+console.log(users)
 
   return (
     <>
-    <h1>{name}</h1> 
+    <p>{users}</p>
     <button onClick={handleClick}>click me</button>
        </>
   )
