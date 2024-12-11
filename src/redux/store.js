@@ -1,12 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { getDataReducer } from "./reducers";
+import { getDataReducer, registerRequest } from "./reducers";
 
+const store = configureStore({
+  reducer: {
+    getData: getDataReducer,
+    registerRequest: registerRequest,
+  },
+});
 
-
-const store=configureStore({
-    reducer:{
-        getData:getDataReducer
-    }
-})
-
-export default store
+export default store;
