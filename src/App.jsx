@@ -6,6 +6,7 @@ import Navbar from "./components/sharedComponents/Navbar"; // Assuming Navbar is
 import Footer from "./components/sharedComponents/Footer"; // Assuming Footer is in the same directory
 import "./styles/global.css";
 import Register from "./components/userComponents/Register";
+import Login from "./components/userComponents/Login";
 const App = () => {
   // Creating a violet-based dark theme
   const darkVioletTheme = createTheme({
@@ -40,6 +41,7 @@ const App = () => {
             <Route path="/services" element={<div>Services Page</div>} />
             <Route path="/contact" element={<div>Contact Page</div>} />
             <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </div>
         <Footer />
