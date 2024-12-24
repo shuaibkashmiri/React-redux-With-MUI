@@ -79,3 +79,12 @@ export const loginRequest = (formData) =>
     "api/user/login",
     formData
   );
+
+export const getUserData = () =>
+  apiCall(
+    "userDataRequest",
+    "userDataSuccess",
+    "userDataError",
+    "userDataReset",
+    "api/user/userdata"
+  );

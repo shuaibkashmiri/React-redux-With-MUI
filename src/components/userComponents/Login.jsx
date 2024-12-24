@@ -10,7 +10,7 @@ import {
   CssBaseline,
   Paper,
 } from "@mui/material";
-import { loginRequest } from "../../redux/action"; // Assuming there's a loginRequest action
+import { loginRequest, getUserData } from "../../redux/action"; // Assuming there's a loginRequest action
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import toast from "react-hot-toast";
 
@@ -58,9 +58,11 @@ const Login = () => {
   };
 
   const dispatch = useDispatch();
-  const message = useSelector((state) => state.loginRequest.message); // Use message instead of message
+  const userState = useSelector((state) => state.user) || {};
+  const { loading, message } = userState;
+  const userData = useSelector((state) => state.user?.userData);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     let formErrors = {};
@@ -70,11 +72,12 @@ const Login = () => {
     setErrors(formErrors);
 
     if (Object.keys(formErrors).length === 0) {
-      dispatch(loginRequest(formData)); // Dispatch login action
+      dispatch(loginRequest(formData));
       if (message === "User Logged In Successfully") {
-        toast.success(message); // Using message for success
+        toast.success(message);
+        dispatch(getUserData());
       } else {
-        toast.error(message); // Using message for error
+        toast.error(message);
       }
     }
   };

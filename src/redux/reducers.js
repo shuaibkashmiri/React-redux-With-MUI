@@ -2,23 +2,23 @@ import { createReducer } from "@reduxjs/toolkit";
 
 const initialState = {
   loading: false,
-  msg: null, // Replaced message with msg
-  users: [], // For user data state
+  message: null, // Replaced message with message
+  user: {}, // For user data state
 };
 
 // General User Data Reducer
-export const getDataReducer = createReducer(initialState, (builder) => {
+export const userDataReducer = createReducer(initialState, (builder) => {
   builder
     .addCase("userDataRequest", (state) => {
       state.loading = true;
     })
     .addCase("userDataSuccess", (state, action) => {
       state.loading = false;
-      state.users = action.payload;
+      state.user = action.payload;
     })
     .addCase("userDataError", (state, action) => {
       state.loading = false;
-      state.msg = action.msg || "Server Error"; // Replaced message with msg
+      state.message = action.message || "Server Error"; // Replaced message with message
     });
 });
 
@@ -30,14 +30,14 @@ export const registerRequest = createReducer(initialState, (builder) => {
     })
     .addCase("registerSuccess", (state, action) => {
       state.loading = false;
-      state.msg = action.msg || "Registration Successful"; // Replaced message with msg
+      state.message = action.message || "Registration Successful"; // Replaced message with message
     })
     .addCase("registerError", (state, action) => {
       state.loading = false;
-      state.msg = action.msg || "Registration Failed"; // Replaced message with msg
+      state.message = action.message || "Registration Failed"; // Replaced message with message
     })
     .addCase("removeError", (state) => {
-      state.msg = null; // Replaced message with msg
+      state.message = null; // Replaced message with message
     });
 });
 
@@ -49,13 +49,13 @@ export const loginRequest = createReducer(initialState, (builder) => {
     })
     .addCase("loginSuccess", (state, action) => {
       state.loading = false;
-      state.msg = action.msg || "Login Successful"; // Replaced message with msg
+      state.message = action.message || "Login Successful"; // Replaced message with message
     })
     .addCase("loginError", (state, action) => {
       state.loading = false;
-      state.msg = action.msg || "Login Failed"; // Replaced message with msg
+      state.message = action.message || "Login Failed"; // Replaced message with message
     })
     .addCase("removeError", (state) => {
-      state.msg = null; // Replaced message with msg
+      state.message = null; // Replaced message with message
     });
 });
