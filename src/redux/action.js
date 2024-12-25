@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const apiCall = (request, success, error, reset, route, formData) => async (
   action
@@ -11,7 +12,9 @@ const apiCall = (request, success, error, reset, route, formData) => async (
     // method post
     if (formData) {
       const baseUrl = "http://localhost:8080";
-      const res = await axios.post(`${baseUrl}/${route}`, formData);
+      const res = await axios.post(`${baseUrl}/${route}`, formData, {
+        withCredentials: true,
+      });
 
       if (res.status === 200) {
         action({
@@ -29,7 +32,13 @@ const apiCall = (request, success, error, reset, route, formData) => async (
       // method get
     } else {
       const baseUrl = "http://localhost:8080";
-      const res = await axios.get(`${baseUrl}${route}`);
+      const token = Cookies.get("token");
+      const res = await axios.get(`${baseUrl}/${route}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      });
 
       if (res.status === 200) {
         action({
@@ -57,7 +66,7 @@ const apiCall = (request, success, error, reset, route, formData) => async (
         type: reset,
         message: null, // Updated message to message
       });
-    }, 2000);
+    }, 4000);
   }
 };
 
@@ -80,7 +89,7 @@ export const loginRequest = (formData) =>
     formData
   );
 
-export const getUserData = () =>
+export const userDataRequest = () =>
   apiCall(
     "userDataRequest",
     "userDataSuccess",
@@ -88,3 +97,15 @@ export const getUserData = () =>
     "userDataReset",
     "api/user/userdata"
   );
+
+// Separate function to handle login success and user data fetch
+export const handleLoginSuccess = () => async (dispatch) => {
+  try {
+    // First dispatch login success
+    await dispatch(loginRequest());
+    // Then fetch user data
+    await dispatch(userDataRequest());
+  } catch (error) {
+    console.error("Login error:", error);
+  }
+};

@@ -9,12 +9,10 @@ import {
   Container,
   CssBaseline,
   Paper,
-  Link, // Add Link from MUI
 } from "@mui/material";
-import { loginRequest, userDataRequest } from "../../redux/action"; // Assuming there's a loginRequest action
+import { loginRequest, getUserData } from "../../redux/action"; // Assuming there's a loginRequest action
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 
 // Custom Dark Theme with Violet
 const theme = createTheme({
@@ -37,7 +35,6 @@ const theme = createTheme({
 });
 
 const Login = () => {
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -62,7 +59,7 @@ const Login = () => {
 
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.user) || {};
-  const message = useSelector((state) => state.loginRequest.message);
+  const { loading, message } = userState;
   const userData = useSelector((state) => state.user?.userData);
 
   const handleSubmit = async (e) => {
@@ -76,10 +73,9 @@ const Login = () => {
 
     if (Object.keys(formErrors).length === 0) {
       dispatch(loginRequest(formData));
-      console.log(message);
       if (message === "User Logged In Successfully") {
         toast.success(message);
-        navigate("/");
+        dispatch(getUserData());
       } else {
         toast.error(message);
       }
@@ -173,18 +169,6 @@ const Login = () => {
               >
                 Login
               </Button>
-              {/* Add Register Link Below */}
-              <Typography variant="body2" color="text.secondary" align="center">
-                Don't have an account?{" "}
-                <Link
-                  href="/register"
-                  color="primary"
-                  underline="hover"
-                  sx={{ fontWeight: "bold" }}
-                >
-                  Register here
-                </Link>
-              </Typography>
             </Box>
           </Box>
         </Paper>

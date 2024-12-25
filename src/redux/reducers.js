@@ -7,7 +7,7 @@ const initialState = {
 };
 
 // General User Data Reducer
-export const userDataReducer = createReducer(initialState, (builder) => {
+export const getDataReducer = createReducer(initialState, (builder) => {
   builder
     .addCase("userDataRequest", (state) => {
       state.loading = true;
@@ -49,6 +49,7 @@ export const loginRequest = createReducer(initialState, (builder) => {
     })
     .addCase("loginSuccess", (state, action) => {
       state.loading = false;
+      state.user = action.payload;
       state.message = action.message || "Login Successful"; // Replaced message with message
     })
     .addCase("loginError", (state, action) => {

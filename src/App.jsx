@@ -7,6 +7,7 @@ import Footer from "./components/sharedComponents/Footer"; // Assuming Footer is
 import "./styles/global.css";
 import Register from "./components/userComponents/Register";
 import Login from "./components/userComponents/Login";
+import Home from "./components/sharedComponents/Home";
 const App = () => {
   // Creating a violet-based dark theme
   const darkVioletTheme = createTheme({
@@ -36,7 +37,7 @@ const App = () => {
         <Navbar />
         <div style={{ minHeight: "80vh" }}>
           <Routes>
-            <Route path="/" element={<div>Home Page</div>} />
+            <Route path="/" element={<Home />} />
             <Route path="/about" element={<div>About Page</div>} />
             <Route path="/services" element={<div>Services Page</div>} />
             <Route path="/contact" element={<div>Contact Page</div>} />
