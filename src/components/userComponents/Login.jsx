@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   TextField,
@@ -9,63 +9,52 @@ import {
   Container,
   CssBaseline,
   Paper,
-  Link, // Add Link from MUI
+  Link,
 } from "@mui/material";
-import { loginRequest, userDataRequest } from "../../redux/action"; // Assuming there's a loginRequest action
+import { loginRequest } from "../../redux/action"; // Assuming there's a loginRequest action
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-// Custom Dark Theme with Violet
 const theme = createTheme({
   palette: {
     mode: "dark",
-    primary: {
-      main: "#7a4ef7", // Violet color for primary button and accents
-    },
+    primary: { main: "#7a4ef7" },
     background: {
-      default: "#1b0d34", // Darker background
-      paper: "#2c1a45", // Slightly lighter container background
+      default: "#1b0d34",
+      paper: "#2c1a45",
     },
-    text: {
-      primary: "#fff", // White text color
-    },
+    text: { primary: "#fff" },
   },
-  typography: {
-    fontFamily: "Roboto, Arial, sans-serif",
-  },
+  typography: { fontFamily: "Roboto, Arial, sans-serif" },
 });
 
 const Login = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [errors, setErrors] = useState({ email: "", password: "" });
 
-  const [errors, setErrors] = useState({
-    email: "",
-    password: "",
-  });
+  const dispatch = useDispatch();
+  const { message, user } = useSelector((state) => state.loginRequest || {});
+
+  useEffect(() => {
+    if (message) {
+      if (message === "User Logged In Successfully") {
+        toast.success(message);
+        navigate("/"); // Navigate after successful login
+      } else {
+        toast.error(message);
+      }
+    }
+  }, [message, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-    setErrors({
-      ...errors,
-      [name]: "",
-    });
+    setFormData({ ...formData, [name]: value });
+    setErrors({ ...errors, [name]: "" });
   };
 
-  const dispatch = useDispatch();
-  const userState = useSelector((state) => state.user) || {};
-  const message = useSelector((state) => state.loginRequest.message);
-  const userData = useSelector((state) => state.user?.userData);
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     let formErrors = {};
@@ -76,13 +65,6 @@ const Login = () => {
 
     if (Object.keys(formErrors).length === 0) {
       dispatch(loginRequest(formData));
-      console.log(message);
-      if (message === "User Logged In Successfully") {
-        toast.success(message);
-        navigate("/");
-      } else {
-        toast.error(message);
-      }
     }
   };
 
@@ -173,7 +155,6 @@ const Login = () => {
               >
                 Login
               </Button>
-              {/* Add Register Link Below */}
               <Typography variant="body2" color="text.secondary" align="center">
                 Don't have an account?{" "}
                 <Link

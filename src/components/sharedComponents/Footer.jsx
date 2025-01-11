@@ -20,7 +20,7 @@ const Footer = () => {
               MyWebsite
             </Typography>
             <Typography variant="body2" align="center">
-              © 2024 MyWebsite. All rights reserved.
+              © 2024 Shoaib Mushtaq Bhat. All rights reserved.
             </Typography>
           </Grid>
 

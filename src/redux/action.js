@@ -109,3 +109,28 @@ export const handleLoginSuccess = () => async (dispatch) => {
     console.error("Login error:", error);
   }
 };
+
+// logout Request
+export const logoutRequest = () => (dispatch) => {
+  try {
+    dispatch({ type: "logoutRequest" }); // Indicate that logout is being processed
+
+    // Remove token from cookies
+    Cookies.remove("token");
+    localStorage.removeItem("token");
+
+    // Reset user data or any other sensitive state
+    dispatch({ type: "logoutSuccess" });
+  } catch (error) {
+    console.error("Logout Error:", error);
+    dispatch({
+      type: "logoutError",
+      message: "Failed to logout. Try again.",
+    });
+  } finally {
+    // Optionally remove any messages after a timeout
+    setTimeout(() => {
+      dispatch({ type: "removeMessage" });
+    }, 4000);
+  }
+};

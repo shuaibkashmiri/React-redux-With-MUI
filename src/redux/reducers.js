@@ -60,3 +60,21 @@ export const loginRequest = createReducer(initialState, (builder) => {
       state.message = null; // Replaced message with message
     });
 });
+
+// Logout Reducer
+
+export const logoutReducer = createReducer(initialState, (builder) => {
+  builder
+    .addCase("logoutRequest", (state) => {
+      state.message = "Processing logout...";
+    })
+    .addCase("logoutSuccess", (state) => {
+      state.message = "Logout successful";
+    })
+    .addCase("logoutError", (state, action) => {
+      state.message = action.message || "Logout failed";
+    })
+    .addCase("removeMessage", (state) => {
+      state.message = null;
+    });
+});
