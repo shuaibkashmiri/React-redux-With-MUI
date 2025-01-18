@@ -4,7 +4,28 @@ const initialState = {
   loading: false,
   message: null, // Replaced message with message
   user: {}, // For user data state
+  blogs: [],
 };
+
+export const getAllBlogs = createReducer(initialState, (builder) => {
+  builder
+    .addCase("blogDataRequest", (state) => {
+      state.loading = true;
+    })
+    .addCase("blogDataSuccess", (state, action) => {
+      state.loading = false;
+      state.blogs = action.payload;
+    })
+    .addCase("blogDataError", (state, action) => {
+      state.loading = false;
+      state.message = action.message || "Failed to Fetch Blogs"; // Replaced message with message
+    })
+    .addCase("removeError", (state) => {
+      state.message = null; // Replaced message with message
+    });
+});
+
+//
 
 // General User Data Reducer
 export const getDataReducer = createReducer(initialState, (builder) => {

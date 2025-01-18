@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import {
+  getAllBlogs,
   getDataReducer,
   loginRequest,
   logoutReducer,
@@ -12,6 +13,7 @@ const store = configureStore({
     registerRequest: registerRequest,
     loginRequest: loginRequest,
     logoutRequest: logoutReducer,
+    blogsRequest: getAllBlogs,
   },
 });
 

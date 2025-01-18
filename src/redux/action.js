@@ -70,6 +70,15 @@ const apiCall = (request, success, error, reset, route, formData) => async (
   }
 };
 
+export const getAllBlogs = () =>
+  apiCall(
+    "blogDataRequest",
+    "blogDataSuccess",
+    "blogDataError",
+    "removeError",
+    "api/blog/allblogs"
+  );
+
 export const registerRequest = (formData) =>
   apiCall(
     "registerRequest",
