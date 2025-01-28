@@ -8,6 +8,7 @@ import "./styles/global.css";
 import Register from "./components/userComponents/Register";
 import Login from "./components/userComponents/Login";
 import Home from "./components/sharedComponents/Home";
+import WriteBlog from "./components/userComponents/WriteBlog";
 const App = () => {
   // Creating a violet-based dark theme
   const darkVioletTheme = createTheme({
@@ -43,6 +44,7 @@ const App = () => {
             <Route path="/contact" element={<div>Contact Page</div>} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/addblog" element={<WriteBlog />} />
           </Routes>
         </div>
         <Footer />

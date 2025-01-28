@@ -11,17 +11,20 @@ import {
   Typography,
   CircularProgress,
   Box,
+  Button,
 } from "@mui/material";
+import { Link } from "react-router-dom"; // Import Link for navigation
 
 const Home = () => {
   const { blogs, loading: blogsLoading, message: blogsMessage } = useSelector(
     (state) => state.blogsRequest
   );
+  const { user } = useSelector((state) => state.userDataRequest); // Get user data from Redux state
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllBlogs());
-    dispatch(userDataRequest()); // User data dispatch call added
+    dispatch(userDataRequest());
   }, [dispatch]);
 
   return (
@@ -32,6 +35,7 @@ const Home = () => {
         paddingBottom: "2rem",
       }}
     >
+      {/* Hero Section */}
       <Box
         sx={{
           backgroundImage: `url(${heroImage})`,
@@ -65,8 +69,29 @@ const Home = () => {
           Discover the latest articles, tips, and insights from our blog
           writers.
         </Typography>
+
+        {/* Conditional Button */}
+        <Box mt={3}>
+          <Button
+            component={Link}
+            to={user ? "/addblog" : "/login"} // Conditional link based on user login status
+            variant="contained"
+            color="primary"
+            size="large"
+            sx={{
+              backgroundColor: "#2e1a47",
+              "&:hover": {
+                backgroundColor: "#2c387e",
+              },
+              textTransform: "none",
+            }}
+          >
+            {user ? "Write a Blog" : "Login to Write"}
+          </Button>
+        </Box>
       </Box>
 
+      {/* Blogs Section */}
       <Container maxWidth="lg" sx={{ marginTop: "2rem" }}>
         <Typography
           variant="h4"
@@ -74,7 +99,7 @@ const Home = () => {
           sx={{
             textAlign: "center",
             marginBottom: "2rem",
-            color: "#3f51b5",
+            color: "#2e1a47",
             fontWeight: "bold",
           }}
         >

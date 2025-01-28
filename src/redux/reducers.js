@@ -99,3 +99,19 @@ export const logoutReducer = createReducer(initialState, (builder) => {
       state.message = null;
     });
 });
+
+export const createBlogReducer = createReducer(initialState, (builder) => {
+  builder
+    .addCase("createBlogRequest", (state) => {
+      state.message = "Posting Blog...";
+    })
+    .addCase("createBlogSuccess", (state, action) => {
+      state.message = action.message;
+    })
+    .addCase("createBlogError", (state, action) => {
+      state.message = action.message || "Blog Post Failed";
+    })
+    .addCase("removeMessage", (state) => {
+      state.message = null;
+    });
+});

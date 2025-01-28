@@ -143,3 +143,15 @@ export const logoutRequest = () => (dispatch) => {
     }, 4000);
   }
 };
+
+// Create Blog
+
+export const createBlogRequest = (formData) =>
+  apiCall(
+    "createBlogRequest",
+    "createBlogSuccess",
+    "createBlogError",
+    "removeMessage",
+    "api/blog/add",
+    formData
+  );
